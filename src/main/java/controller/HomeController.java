@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.bean.User;
 
@@ -32,13 +33,14 @@ public class HomeController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String token = (String)request.getAttribute("token");
+		HttpSession session = request.getSession();
+		String token = (String)session.getAttribute("token");
 		AuthBO authBO = new AuthBO();
-		System.out.println("token" + token);
 		if(token == null) {
 			response.sendRedirect(request.getContextPath() + "/login");
 		}else {
 		User user = authBO.getUser(token);
+		System.out.println("id" + user.getId());
 		request.setAttribute("user", user);
 		RequestDispatcher rd =  getServletContext().getRequestDispatcher("/home.jsp");
 		rd.forward(request,response);
