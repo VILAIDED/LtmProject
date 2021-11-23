@@ -5,7 +5,11 @@ import model.dao.AuthDao;
 
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.Jwts;
+
+import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Date; 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class AuthBO {
