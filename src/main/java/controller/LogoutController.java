@@ -10,21 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.bean.User;
-
-import model.bo.AuthBO;
-
 /**
- * Servlet implementation class HomeController
+ * Servlet implementation class LogoutController
  */
-@WebServlet("/home")
-public class HomeController extends HttpServlet {
+@WebServlet("/logout")
+public class LogoutController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public HomeController() {
+    public LogoutController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,18 +30,9 @@ public class HomeController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		//session.removeAttribute("token");
-		String token = (String)session.getAttribute("token");
-		AuthBO authBO = new AuthBO();
-		if(token == null || !authBO.validateJWTToken(token)) {
-			session.removeAttribute("token");
-			response.sendRedirect(request.getContextPath() + "/login");
-		}else {
-		User user = authBO.getUser(token);
-		request.setAttribute("user", user);
-		RequestDispatcher rd =  getServletContext().getRequestDispatcher("/home.jsp");
-		rd.forward(request,response);
-		}
+		session.removeAttribute("token");
+		response.sendRedirect(request.getContextPath() + "/home");
+		
 	}
 
 	/**

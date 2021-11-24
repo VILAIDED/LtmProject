@@ -31,12 +31,13 @@ public class LoginController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String token = (String)request.getAttribute("token");
+		String token = (String)session.getAttribute("token");
 		if(token != null) {
 			response.sendRedirect(request.getContextPath() + "/home");
-		}
+		}else{
 		RequestDispatcher rd =  getServletContext().getRequestDispatcher("/login.jsp");
 		rd.forward(request,response);
+		}
 	}
 
 	/**

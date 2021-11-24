@@ -10,21 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.bean.User;
-
 import model.bo.AuthBO;
 
 /**
- * Servlet implementation class HomeController
+ * Servlet implementation class ResetPWController
  */
-@WebServlet("/home")
-public class HomeController extends HttpServlet {
+@WebServlet("/reset_password")
+public class ResetPWController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public HomeController() {
+    public ResetPWController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,26 +32,33 @@ public class HomeController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		//session.removeAttribute("token");
 		String token = (String)session.getAttribute("token");
-		AuthBO authBO = new AuthBO();
-		if(token == null || !authBO.validateJWTToken(token)) {
-			session.removeAttribute("token");
+		if(token == null) {
 			response.sendRedirect(request.getContextPath() + "/login");
 		}else {
-		User user = authBO.getUser(token);
-		request.setAttribute("user", user);
-		RequestDispatcher rd =  getServletContext().getRequestDispatcher("/home.jsp");
-		rd.forward(request,response);
+			RequestDispatcher rd =  getServletContext().getRequestDispatcher("/resetPw.jsp");
+			rd.forward(request,response);
 		}
+	
 	}
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String oldPw = request.getParameter("oldPw");
+		String newPw = request.getParameter("newPw");
+		AuthBO authBO = new AuthBO();
+		HttpSession session = request.getSession();
+		String token = (String)session.getAttribute("token");
+		String newToken = authBO.resetPassword(token, oldPw, newPw);
+		if(newToken != "current password is not correct") {
+			session.setAttribute("token", newToken);
+			response.sendRedirect(request.getContextPath() + "/home");
+		}
+		else {
+		RequestDispatcher rd =  getServletContext().getRequestDispatcher("/resetPw.jsp");
+		rd.forward(request,response);
+		}
 	}
 
 }
