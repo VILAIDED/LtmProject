@@ -24,6 +24,7 @@ public class AuthBO {
 		String hashedPW = bcrypt.encode(user.getPassword());
 		user.setPassword(hashedPW);
 		authDao.insertUser(user);
+		System.out.println("meow");
 		return true;
 	}
 	public String resetPassword(String token,String oldPW,String newPW) {
@@ -55,7 +56,7 @@ public class AuthBO {
 		SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 		
 		long nowMillis = System.currentTimeMillis();
-		long tillMillis = 10000;
+		long tillMillis = 100000000;
 	    Date now = new Date(nowMillis);
 	    byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(keyTest);
 	    Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
