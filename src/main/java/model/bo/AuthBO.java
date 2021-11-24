@@ -2,10 +2,10 @@ package model.bo;
 import javax.crypto.spec.SecretKeySpec;
 import model.bean.User;
 import model.dao.AuthDao;
-
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 
@@ -26,36 +26,72 @@ public class AuthBO {
 		authDao.insertUser(user);
 		return true;
 	}
-	public String login(String username,String password) {
-		String msg =  "";
-		User u = authDao.findUser(username);
-		if(u == null) {
-			return "user or password is invalid";
-		}
-		if(bcrypt.matches(password, u.getPassword())) {
-			return generateToken(Integer.toString(u.getId()));
+	public String resetPassword(String token,String oldPW,String newPW) {
+		String msg = "";
+		
+		int id = encodeJWT(token).getId();
+		User user = authDao.getUserById(id);
+		if(!(bcrypt.matches(oldPW, user.getPassword()))) {
+			msg = "current password is not correct";
+		}else {
+			String hashedPW = bcrypt.encode(user.getPassword());
+			authDao.resetPassword(id, hashedPW);
+			msg = generateToken(user);
 		}
 		return msg;
 	}
-	public String generateToken(String id) {
+	public String login(String username,String password) {
+		String msg =  "user or password is invalid";
+		User u = authDao.findUser(username);
+		if(u == null) {
+			return msg;
+		}
+		if(bcrypt.matches(password, u.getPassword())) {
+			return generateToken(u);
+		}
+		return msg;
+	}
+	public String generateToken(User user) {
 		SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
+		
 		long nowMillis = System.currentTimeMillis();
+		long tillMillis = 10000;
 	    Date now = new Date(nowMillis);
 	    byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(keyTest);
 	    Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
-	    JwtBuilder builder = Jwts.builder().setId(id)
+	    JwtBuilder builder = Jwts.builder().setId(Integer.toString(user.getId())).claim("username",user.getUsername())
+	    		.claim("realname", user.getRealname())
                 .setIssuedAt(now)
+                .setExpiration(new Date(nowMillis + tillMillis))
                 .signWith(signatureAlgorithm, signingKey);
-	    
+	            
 	    return builder.compact();
 	}
-	public int encodeJWT(String token) {
+	public boolean validateJWTToken(String token) {
+		    boolean check = false;
+		    try {
+		      Jwts.parser().setSigningKey(keyTest).parseClaimsJws(token);
+		     check = true;
+		      }catch(ExpiredJwtException e) {
+		    	  System.out.println("meow "+e);
+		      }
+		    return check;
+	}
+	public User encodeJWT(String token) {
 		Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(keyTest))
 				.parseClaimsJws(token).getBody();
-		return Integer.parseInt(claims.getId());
+		int id = Integer.parseInt(claims.getId());
+		String username = (String)claims.get("username");
+		String realname = (String)claims.get("realname");
+		
+		return new User(id,username,"",realname);
 	}
 	public User getUser(String token) {
-		int id = encodeJWT(token);
-		return authDao.getUserById(id);
+		
+		return encodeJWT(token);
 	}
+
+//	public String refreshToken() {
+//		
+//	}
 }
