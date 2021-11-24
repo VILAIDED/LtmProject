@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,7 +33,6 @@ public class HomeController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		//session.removeAttribute("token");
 		String token = (String)session.getAttribute("token");
 		AuthBO authBO = new AuthBO();
 		if(token == null || !authBO.validateJWTToken(token)) {

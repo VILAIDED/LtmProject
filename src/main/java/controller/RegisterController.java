@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.bean.User;
 
@@ -46,10 +47,15 @@ public class RegisterController extends HttpServlet {
 		System.out.print(username + password + realname);
 		AuthBO authBO = new AuthBO();
 		boolean check = authBO.register(new User(username,password,realname));
+		System.out.println("check" + check);
 		if(check) {
-			response.sendRedirect(request.getContextPath() + "/login");
+			    HttpSession session = request.getSession();
+				String token = authBO.login(username,password);
+				session.setAttribute("token",token);
+				response.sendRedirect(request.getContextPath() + "/home");
+			
 		}else {
-			RequestDispatcher rd =  getServletContext().getRequestDispatcher("/register.jsp");
+			RequestDispatcher rd =  getServletContext().getRequestDispatcher("/login.jsp");
 			rd.forward(request,response);
 		}
 		

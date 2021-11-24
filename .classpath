@@ -13,13 +13,7 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="C:/Users/haiqu/Downloads/java lib/java lib/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/haiqu/Downloads/java lib/java lib/jackson-annotations-2.13.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/haiqu/Downloads/java lib/java lib/jackson-core-2.13.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/haiqu/Downloads/java lib/java lib/jackson-databind-2.13.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/haiqu/Downloads/java lib/java lib/jaxb-api-2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/haiqu/Downloads/java lib/java lib/jjwt-0.9.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/haiqu/Downloads/java lib/java lib/spring-security-core-5.6.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/haiqu/Downloads/java lib/java lib/spring-security-crypto-5.6.0.jar"/>
+	<classpathentry kind="lib" path="E:/java lib/Lib/jjwt-0.9.1.jar"/>
+	<classpathentry kind="lib" path="E:/java lib/Lib/spring-security-crypto-5.6.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

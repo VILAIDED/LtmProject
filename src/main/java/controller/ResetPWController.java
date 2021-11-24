@@ -47,6 +47,7 @@ public class ResetPWController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String oldPw = request.getParameter("oldPw");
 		String newPw = request.getParameter("newPw");
+		System.out.print(newPw);
 		AuthBO authBO = new AuthBO();
 		HttpSession session = request.getSession();
 		String token = (String)session.getAttribute("token");

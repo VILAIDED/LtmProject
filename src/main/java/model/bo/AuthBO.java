@@ -4,6 +4,8 @@ import model.bean.User;
 import model.dao.AuthDao;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
+import java.time.ZonedDateTime;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtBuilder;
@@ -35,7 +37,7 @@ public class AuthBO {
 		if(!(bcrypt.matches(oldPW, user.getPassword()))) {
 			msg = "current password is not correct";
 		}else {
-			String hashedPW = bcrypt.encode(user.getPassword());
+			String hashedPW = bcrypt.encode(newPW);
 			authDao.resetPassword(id, hashedPW);
 			msg = generateToken(user);
 		}
@@ -56,17 +58,21 @@ public class AuthBO {
 		SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 		
 		long nowMillis = System.currentTimeMillis();
-		long tillMillis = 100000000;
 	    Date now = new Date(nowMillis);
 	    byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(keyTest);
 	    Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 	    JwtBuilder builder = Jwts.builder().setId(Integer.toString(user.getId())).claim("username",user.getUsername())
 	    		.claim("realname", user.getRealname())
                 .setIssuedAt(now)
-                .setExpiration(new Date(nowMillis + tillMillis))
+                .setExpiration(Date.from(ZonedDateTime.now().plusWeeks(2).toInstant()))
                 .signWith(signatureAlgorithm, signingKey);
 	            
 	    return builder.compact();
+	}
+	public String refreshToken(String token) {
+		User user = encodeJWT(token);
+		String newToken = generateToken(user);
+		return newToken;
 	}
 	public boolean validateJWTToken(String token) {
 		    boolean check = false;
@@ -84,7 +90,6 @@ public class AuthBO {
 		int id = Integer.parseInt(claims.getId());
 		String username = (String)claims.get("username");
 		String realname = (String)claims.get("realname");
-		
 		return new User(id,username,"",realname);
 	}
 	public User getUser(String token) {

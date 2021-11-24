@@ -9,7 +9,7 @@
 </head>
 <body>
 <% 
-	User user = (User)request.getSession().getAttribute("user");
+	User user = (User)request.getAttribute("user");
 	if (user!=null) {
 %>
 ID: <%=user.getId() %> <br>
@@ -18,5 +18,7 @@ ID: <%=user.getId() %> <br>
 <%
 	} 
 %>
+<A Href = "<%=request.getContextPath()%>/reset_password">reset</a>
+<A Href = "<%=request.getContextPath()%>/logout">logout</a>
 </body>
 </html>
