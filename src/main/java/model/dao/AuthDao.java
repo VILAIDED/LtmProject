@@ -54,6 +54,22 @@ public class AuthDao {
 	}
 			return user;
 	}
+	public void resetPassword(int id,String newPW) {
+		Connection con;
+		 String query = "UPDATE users set password = ? WHERE id = ?";
+		 try {
+		 Class.forName("com.mysql.cj.jdbc.Driver");
+		 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ltm","root","");
+		 PreparedStatement prepare = con.prepareStatement(query);
+		 prepare.setString(1,newPW);
+		 prepare.setInt(2,id);
+		 prepare.execute();
+		 con.close();
+		 
+		 }catch(Exception ex) {
+			 System.out.println(ex);
+		 }
+	}
 	public void insertUser(User user) {
 		Connection con;
 		 String query = "INSERT INTO users (username,password,realname) VALUES(?,?,?)";
