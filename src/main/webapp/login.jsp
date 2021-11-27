@@ -24,21 +24,6 @@
               <input type="password" placeholder="Password" name="password" />
             </div>
             <input type="submit" value="Login" class="btn solid" />
-            <p class="social-text">Or Sign in with social platforms</p>
-            <div class="social-media">
-              <a href="#" class="social-icon">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-google"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-linkedin-in"></i>
-              </a>
-            </div>
           </form>
           <form action="register" class="sign-up-form" method="post">
             <h2 class="title">Sign up</h2>
@@ -55,21 +40,6 @@
               <input type="password" placeholder="Password" name="password" />
             </div>
             <input type="submit" class="btn" value="Sign up" />
-            <p class="social-text">Or Sign up with social platforms</p>
-            <div class="social-media">
-              <a href="#" class="social-icon">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-google"></i>
-              </a>
-              <a href="#" class="social-icon">
-                <i class="fab fa-linkedin-in"></i>
-              </a>
-            </div>
           </form>
         </div>
       </div>
@@ -79,7 +49,7 @@
           <div class="content">
             <h3>New here ?</h3>
             <p>
-              Please sign up and enjoy experience in <span class="panel_header">Quiz App</span> now!
+              Please sign up and enjoy experience in <span class="panel_header">Video Converter</span> now!
             </p>
             <button class="btn transparent" id="sign-up-btn">
               Sign up
@@ -91,7 +61,7 @@
           <div class="content">
             <h3>One of us ?</h3>
             <p>
-              Please sign in and join in interesting question now!
+              Please sign in and join in interesting now!
             </p>
             <button class="btn transparent" id="sign-in-btn">
               Sign in

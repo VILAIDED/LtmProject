@@ -46,6 +46,7 @@ public class RegisterController extends HttpServlet {
 		System.out.print(username + password + realname);
 		AuthBO authBO = new AuthBO();
 		boolean check = authBO.register(new User(username,password,realname));
+		System.out.print(check);
 		if(check) {
 			response.sendRedirect(request.getContextPath() + "/login");
 		}else {
