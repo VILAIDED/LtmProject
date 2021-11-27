@@ -5,12 +5,11 @@
 <html>
 <head>
 <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 <meta charset="UTF-8">
 <style><%@include file="/style/sidebar.css"%></style>
-<style><%@include file="/style/uploadFile.css"%></style>
+<style><%@include file="/style/fileManage.css"%></style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Home</title>
+<title>File Manage</title>
 </head>
 <body>
  <div class="sidebar">
@@ -48,39 +47,57 @@
              <div class="name">VilayDed</div>
            </div>
          </div>
-         <a id="log_out" href="login.jsp" ><i class='bx bx-log-out'></i></a>
+          <a id="log_out" href="login.jsp" ><i class='bx bx-log-out'></i></a>
      </li>
     </ul>
   </div>
-     <div class="wrapper">
-   <div class="left_download">
-    <header>Convert file MP4 to MP3</header>
-    <form action="#">
-      <input class="file-input" type="file" name="file" hidden multiple>
-      <i class="fas fa-cloud-upload-alt"></i>
-      <p style="align-items:center">Browse File to Upload</p>
-    </form>
-    <button class="download-all">Download All</button>
-   </div>
-   <div class="right_download">
-    <section class="uploaded-area">
-    <ul>
-    <li class="row">
-    <i class="fas fa-file-alt"></i>
-    <div class="content">
-      <div class="details">
-        <span class="name">ABC</span>
-        <span class="size">120 KB</span>
-      </div>
-      <div class="button-download">
-        <a class="download" href="#"><i class="fas fa-download"></i></a>
-      </div>
-    </div>
-  </li>
-  </ul>
+  <section class="home-section">
+      
+   <table class="table">
+     <thead>
+     	<tr>
+     	 <th>ID</th>
+     	 <th>Name</th>
+     	 <th>Size</th>
+     	 <th>Date</th>
+     	 <th>Download</th>
+     	</tr>
+     </thead>
+     <tbody>
+     	  <tr>
+     	  	  <td data-label="ID">1</td>
+     	  	  <td data-label="Name">Dinesh</td>
+     	  	  <td data-label="Size">34 KB</td>
+     	  	  <td data-label="Date">2021-09-08</td>
+     	  	  <td data-label="Download"><a href="#">Download</a></td>
+     	  </tr>
+
+     	  <tr>
+     	  	  <td data-label="ID">2</td>
+     	  	  <td data-label="Name">VilayDed</td>
+     	  	  <td data-label="Size">44 KB</td>
+     	  	  <td data-label="Date">2021-09-08</td>
+     	  	  <td data-label="Download"><a href="#">Download</a></td>
+     	  </tr>
+
+     	  <tr>
+     	  	  <td data-label="ID">3</td>
+     	  	  <td data-label="Name">Dinesh</td>
+     	  	  <td data-label="Size">34 KB</td>
+     	  	  <td data-label="Date">2021-09-08</td>
+     	  	  <td data-label="Download"><a href="#">Download</a></td>
+     	  </tr>
+
+     	  <tr>
+     	  	  <td data-label="ID">4</td>
+     	  	  <td data-label="Name">Dinesh</td>
+     	  	  <td data-label="Size">34 KB</td>
+     	  	  <td data-label="Date">2021-09-08</td>
+     	  	  <td data-label="Download"><a href="#">Download</a></td>
+     	  </tr>
+     </tbody>
+   </table>
   </section>
-   </div>
-  </div>
   <script>
   let sidebar = document.querySelector(".sidebar");
   let closeBtn = document.querySelector("#btn");
@@ -100,6 +117,5 @@
    }
   }
   </script>
-  <script><%@include file="/js/uploadFile.js"%></script>
 </body>
 </html>
