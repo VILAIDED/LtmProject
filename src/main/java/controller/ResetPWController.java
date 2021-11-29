@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.bean.User;
 import model.bo.AuthBO;
 
 /**
@@ -36,7 +38,10 @@ public class ResetPWController extends HttpServlet {
 		if(token == null) {
 			response.sendRedirect(request.getContextPath() + "/login");
 		}else {
-			RequestDispatcher rd =  getServletContext().getRequestDispatcher("/resetPw.jsp");
+			AuthBO authBO = new AuthBO();
+			User user = authBO.getUser(token);
+			request.setAttribute("user", user);
+			RequestDispatcher rd =  getServletContext().getRequestDispatcher("/user.jsp");
 			rd.forward(request,response);
 		}
 	
@@ -45,20 +50,24 @@ public class ResetPWController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String oldPw = request.getParameter("oldPw");
-		String newPw = request.getParameter("newPw");
-		System.out.print(newPw);
+		String oldPw = request.getParameter("password");
+		String confirmNewPW = request.getParameter("confirmNewPassword");
+		String newPw = request.getParameter("newPassword");
+		System.out.println(newPw +" " + confirmNewPW);
 		AuthBO authBO = new AuthBO();
 		HttpSession session = request.getSession();
+		if(!newPw.equals(confirmNewPW)) {
+			response.sendRedirect(request.getContextPath() + "/reset_password");
+		}
+		else {
 		String token = (String)session.getAttribute("token");
 		String newToken = authBO.resetPassword(token, oldPw, newPw);
 		if(newToken != "current password is not correct") {
-			session.setAttribute("token", newToken);
-			response.sendRedirect(request.getContextPath() + "/home");
+			response.sendRedirect(request.getContextPath() + "/logout");
 		}
 		else {
-		RequestDispatcher rd =  getServletContext().getRequestDispatcher("/resetPw.jsp");
-		rd.forward(request,response);
+			response.sendRedirect(request.getContextPath() + "/reset_password");
+		}
 		}
 	}
 

@@ -3,16 +3,16 @@
 <%@page import="model.bean.User"%>
 <%@page import="java.util.ArrayList" %>
 <%@page import="java.io.File" %>
+<%@page import="model.bean.UserFile" %>
 <!DOCTYPE html>
 <html>
 <head>
 <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 <meta charset="UTF-8">
 <style><%@include file="/style/sidebar.css"%></style>
-<style><%@include file="/style/uploadFile.css"%></style>
+<style><%@include file="/style/fileManage.css"%></style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Home</title>
+<title>File Manage</title>
 </head>
 <body>
  <div class="sidebar">
@@ -50,67 +50,65 @@
              <div class="name">VilayDed</div>
            </div>
          </div>
-         <button id="log_out" ><i class='bx bx-log-out'></i></button>
+          <a id="log_out" href="login.jsp" ><i class='bx bx-log-out'></i></a>
      </li>
     </ul>
   </div>
-     <div class="wrapper">
-   <div class="left_download">
-    <header>Convert file MP4 to MP3</header>
-    <form action="uploadfile" method="post" enctype="multipart/form-data">
-      <input class="file-input" type="file" name="file" hidden multiple>
-      <i class="fas fa-cloud-upload-alt"></i>
-      <p style="align-items:center">Browse File to Upload</p>
-       <input class="test" type="submit" name="file" value="submit" hidden/>
-    </form>
-    <button class="download-all">Download All</button>
-   </div>
-   <div class="right_download">
-    <section class="uploaded-area">
-    <%
-    ArrayList<String> fileStatus  = (ArrayList<String>)request.getAttribute("fileT");
-    if(fileStatus != null){
-    	for(int i = 0 ; i < fileStatus.size() ; i++){
-    		File f = new File(fileStatus.get(i));
-    	 %>
-    <ul>
-    <li class="row">
-    <i class="fas fa-file-alt"></i>
-    <div class="content">
+  <section class="home-section">
       
-      <%
-      if(f.exists()){
-    	 long size = f.length() / 1024 / 1024; 
-      %>
-       <div class="details">
-       <span class="name"><%= f.getName() %></span>
-    	 <span class="size"><%= size %> MB</span> 
-           </div>
-           <div class="button-download">
-        <a class="download" href="<%=request.getContextPath()%>/download?pathfile=<%=f.getName()%>"><i class="fas fa-download"></i></a>
-        </div>
-        <% 
-      }
-      else{
-      %>
-          <div class="details">
-    	  <span class="name"><%= fileStatus.get(i) %></span>
-    	  </div>
-    	  <div >In progress...</div>
-  
-      <%	  
-      }
-      %>
-    </div>
-  </li>
-  </ul>
-  <%
-    }
-    }
-  %>
+   <table class="table">
+     <thead>
+     	<tr>
+     	 <th>Name</th>
+     	 <th>Size</th>
+     	 <th>Date</th>
+     	 <th>Download</th>
+     	</tr>
+     </thead>
+     <tbody>
+     <%
+     ArrayList<UserFile> uFList = (ArrayList<UserFile>)request.getAttribute("uFList");
+     if(uFList != null){
+    	 for(int i = 0 ; i < uFList.size() ; i++){
+     
+     %>
+     	  <tr>
+     	  	  <td data-label="Name"><%= uFList.get(i).getPathFile() %></td>
+     	  	  <%
+     	  	  if(uFList.get(i).getPathCVFile() != null){
+     	  		
+     	  		File f = new File(uFList.get(i).getPathCVFile() + ".mp3");
+     	  		if(f.exists()){
+     	  	    long size = f.length() / 1024 / 1024;   
+     	  	  
+     	  	 %>
+     	  	  <td data-label="Size"><%=size %> MB</td>
+     	  	  <td data-label="Date"><%= uFList.get(i).getConvertAt() %></td>
+     	  	  <td data-label="Download"><a href="<%=request.getContextPath()%>/download?pathfile=<%=f.getName()%>">Download</a></td>
+     	  	  <%
+     	  	  }
+     	  	  }
+     	  	  else{
+     	  		  
+     	  	  %>
+     	  	  <td data-label="Size"></td>
+     	  	  <td data-label="Date"></td>
+     	  	  <td data-label="Download"><a >In progress</a></td>
+     	  	  <%
+     	  	  }
+    	 
+     	  	  %>
+     	  </tr>
+     	   <%
+     	  	 }
+             }
+     	  	%>
+     	  
+
+     	 
+     </tbody>
+   </table>
   </section>
-   </div>
-  </div>
   <script>
   let sidebar = document.querySelector(".sidebar");
   let closeBtn = document.querySelector("#btn");
@@ -130,6 +128,5 @@
    }
   }
   </script>
-  <script><%@include file="/js/uploadFile.js"%></script>
 </body>
 </html>

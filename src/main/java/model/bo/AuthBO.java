@@ -64,7 +64,7 @@ public class AuthBO {
 	    JwtBuilder builder = Jwts.builder().setId(Integer.toString(user.getId())).claim("username",user.getUsername())
 	    		.claim("realname", user.getRealname())
                 .setIssuedAt(now)
-                .setExpiration(Date.from(ZonedDateTime.now().plusWeeks(2).toInstant()))
+                .setExpiration(Date.from(ZonedDateTime.now().plusHours(2).toInstant()))
                 .signWith(signatureAlgorithm, signingKey);
 	            
 	    return builder.compact();

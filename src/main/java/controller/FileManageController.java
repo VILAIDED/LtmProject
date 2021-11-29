@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,20 +12,21 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.bean.User;
-
+import model.bean.UserFile;
 import model.bo.AuthBO;
+import model.bo.UserFileBO;
 
 /**
- * Servlet implementation class RegisterController
+ * Servlet implementation class FileManageController
  */
-@WebServlet("/register")
-public class RegisterController extends HttpServlet {
+@WebServlet("/filemanage")
+public class FileManageController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RegisterController() {
+    public FileManageController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,31 +35,29 @@ public class RegisterController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd =  getServletContext().getRequestDispatcher("/register.jsp");
+		HttpSession session = request.getSession();
+		String token = (String)session.getAttribute("token");
+		UserFileBO uFile = new UserFileBO();
+		AuthBO authBO = new AuthBO();
+		if(token == null || !authBO.validateJWTToken(token)) {
+			session.removeAttribute("token");
+			response.sendRedirect(request.getContextPath() + "/login");
+		}else {
+		User user = authBO.getUser(token);
+		ArrayList<UserFile> uFileList = uFile.getUserFileBO(user.getId());
+		
+		request.setAttribute("uFList",uFileList);
+		RequestDispatcher rd =  getServletContext().getRequestDispatcher("/fileManage.jsp");
 		rd.forward(request,response);
+		}
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		String realname = request.getParameter("realname");
-		AuthBO authBO = new AuthBO();
-		boolean check = authBO.register(new User(username,password,realname));
-		if(check) {
-			    HttpSession session = request.getSession();
-				String token = authBO.login(username,password);
-				session.setAttribute("token",token);
-				response.sendRedirect(request.getContextPath() + "/home");
-			
-		}else {
-			RequestDispatcher rd =  getServletContext().getRequestDispatcher("/login.jsp");
-			rd.forward(request,response);
-		}
-		
-		
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }
