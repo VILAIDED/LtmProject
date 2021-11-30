@@ -58,7 +58,6 @@ public class HomeController extends HttpServlet {
 		}
 		request.setAttribute("fileT", fileStatus);
 		}
-		System.out.println("user" + user.getRealname());
 //		session.removeAttribute("fileT");
 //		request.setAttribute("uList", uFList);
 		request.setAttribute("user", user);

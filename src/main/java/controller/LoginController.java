@@ -49,7 +49,6 @@ public class LoginController extends HttpServlet {
 		AuthBO authBO = new AuthBO();
 		String token = authBO.login(username,password);
 		HttpSession session = request.getSession();
-		System.out.println("token" + token);
 		if(token != "user or password is invalid") {
 			session.setAttribute("token",token);
 			response.sendRedirect(request.getContextPath() + "/home");
