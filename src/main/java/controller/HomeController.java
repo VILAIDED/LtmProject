@@ -52,10 +52,9 @@ public class HomeController extends HttpServlet {
 		ArrayList<String>  fileStatus = new ArrayList<String>();
 		String pathFile = "";
 		for(int i = 0 ; i < lastUp.size() ; i++) {
-			pathFile = uFile.checkConvert(lastUp.get(i));
+			pathFile = uFile.checkConvert(user.getId(),lastUp.get(i));
 			if(pathFile == null)  fileStatus.add(lastUp.get(i));
 			else  fileStatus.add(pathFile+".mp3");
-			File f = new File(fileStatus.get(i));
 		}
 		request.setAttribute("fileT", fileStatus);
 		}

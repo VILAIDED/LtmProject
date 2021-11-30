@@ -50,7 +50,7 @@
              <div class="name">VilayDed</div>
            </div>
          </div>
-         <button id="log_out" ><i class='bx bx-log-out'></i></button>
+         <a id="log_out" href="/login" ><i class='bx bx-log-out'></i></a>
      </li>
     </ul>
   </div>
@@ -63,7 +63,7 @@
       <p style="align-items:center">Browse File to Upload</p>
        <input class="test" type="submit" name="file" value="submit" hidden/>
     </form>
-    <button class="download-all">Download All</button>
+    <h4 class="warning">Please reload page for checking your progress</h4>
    </div>
    <div class="right_download">
     <section class="uploaded-area">
@@ -80,11 +80,11 @@
       
       <%
       if(f.exists()){
-    	 long size = f.length() / 1024 / 1024; 
+    	 Double size =(double) f.length() / 1024 / 1024; 
       %>
        <div class="details">
        <span class="name"><%= f.getName() %></span>
-    	 <span class="size"><%= size %> MB</span> 
+    	 <span class="size"><%= String.format("%.2f", size) %> MB</span> 
            </div>
            <div class="button-download">
         <a class="download" href="<%=request.getContextPath()%>/download?pathfile=<%=f.getName()%>"><i class="fas fa-download"></i></a>
@@ -96,7 +96,7 @@
           <div class="details">
     	  <span class="name"><%= fileStatus.get(i) %></span>
     	  </div>
-    	  <div >In progress...</div>
+    	  <div class="loader" ></div>
   
       <%	  
       }
@@ -115,12 +115,10 @@
   let sidebar = document.querySelector(".sidebar");
   let closeBtn = document.querySelector("#btn");
   let searchBtn = document.querySelector(".bx-search");
-
   closeBtn.addEventListener("click", ()=>{
     sidebar.classList.toggle("open");
     menuBtnChange();//calling the function(optional)
   });
-
   // following are the code to change sidebar button(optional)
   function menuBtnChange() {
    if(sidebar.classList.contains("open")){

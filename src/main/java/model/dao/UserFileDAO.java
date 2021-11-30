@@ -38,15 +38,16 @@ public class UserFileDAO {
 			 ex.printStackTrace();
 		 }
 	}
-	public String checkFileConvert(String fileName) {
+	public String checkFileConvert(int id,String fileName) {
 		Connection con;
 		String fileConvert = "";
-		 String query = "Select pathCVFile FROM  UserFile Where pathFile = ?";
+		 String query = "Select pathCVFile FROM  UserFile Where pathFile = ? AND id = ?";
 		 try {
 			 Class.forName("com.mysql.cj.jdbc.Driver");
 			 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ltm","root","");
 			 PreparedStatement prepare = con.prepareStatement(query);
 			 prepare.setString(1,fileName);
+			 prepare.setInt(2, id);
 			 ResultSet rs = prepare.executeQuery();
 			 if(rs.next()) {
 				 fileConvert = rs.getString(1);

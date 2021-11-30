@@ -16,8 +16,8 @@ public class UserFileBO {
 	public void convertFile(String pathFile,String pathCVFile) {
 		uFileDao.covertedFile(pathFile, pathCVFile);
 	}
-	public String checkConvert(String fileName) {
-		return uFileDao.checkFileConvert(fileName);
+	public String checkConvert(int id,String fileName) {
+		return uFileDao.checkFileConvert(id,fileName);
 	}
 	public void deleteUserFileBO(String path, int id) {
 		uFileDao.deleteUserFile(id, path);

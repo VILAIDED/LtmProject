@@ -79,10 +79,10 @@
      	  		
      	  		File f = new File(uFList.get(i).getPathCVFile() + ".mp3");
      	  		if(f.exists()){
-     	  	    long size = f.length() / 1024 / 1024;   
+     	  	    Double size = (double)f.length() / 1024 / 1024;   
      	  	  
      	  	 %>
-     	  	  <td data-label="Size"><%=size %> MB</td>
+     	  	  <td data-label="Size"><%= String.format("%.1f", size) %> MB</td>
      	  	  <td data-label="Date"><%= uFList.get(i).getConvertAt() %></td>
      	  	  <td data-label="Download"><a href="<%=request.getContextPath()%>/download?pathfile=<%=f.getName()%>">Download</a></td>
      	  	  <%
