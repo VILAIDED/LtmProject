@@ -63,7 +63,11 @@
       <p style="align-items:center">Browse File to Upload</p>
        <input class="test" type="submit" name="file" value="submit" hidden/>
     </form>
+<<<<<<< HEAD
     <h4 class="warning">Please reload page for checking your progress</h4>
+=======
+    <h4 class="warning">Please reload page when in processing converter</h4>
+>>>>>>> 5fd1046c81d1be7eaee841e7046e3c7824c6dac7
    </div>
    <div class="right_download">
     <section class="uploaded-area">

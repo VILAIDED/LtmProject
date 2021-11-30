@@ -43,6 +43,7 @@ public class RegisterController extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String realname = request.getParameter("realname");
+		System.out.print(username + "--"+ password+"--"+ realname);
 		AuthBO authBO = new AuthBO();
 		boolean check = authBO.register(new User(username,password,realname));
 		if(check) {
