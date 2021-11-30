@@ -154,3 +154,7 @@ button.download-all {
 .button-download button {
   cursor: pointer;
 }
+
+.warning{
+	color: #6990f2;
+}

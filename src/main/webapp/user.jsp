@@ -66,7 +66,7 @@
 <i class='fas fa-user'></i>
 </div>
 <div class="field">
-<input type="text" name="realname" value=<%=user.getRealname() %> disabled="disabled">
+<input type="text" name="realname" value="<%=user.getRealname() %>" disabled="disabled">
 <i class="fas fa-file-signature"></i>
 </div>
 <%} %>

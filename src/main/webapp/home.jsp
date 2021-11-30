@@ -50,7 +50,7 @@
              <div class="name">VilayDed</div>
            </div>
          </div>
-         <button id="log_out" ><i class='bx bx-log-out'></i></button>
+         <a id="log_out" href="/login" ><i class='bx bx-log-out'></i></a>
      </li>
     </ul>
   </div>
@@ -63,7 +63,7 @@
       <p style="align-items:center">Browse File to Upload</p>
        <input class="test" type="submit" name="file" value="submit" hidden/>
     </form>
-    <button class="download-all">Download All</button>
+    <h4 class="warning">Please reload page when in processing converter</h4>
    </div>
    <div class="right_download">
     <section class="uploaded-area">
@@ -96,7 +96,7 @@
           <div class="details">
     	  <span class="name"><%= fileStatus.get(i) %></span>
     	  </div>
-    	  <div >In progress...</div>
+    	  <div class="loader" ></div>
   
       <%	  
       }
