@@ -50,7 +50,7 @@
              <div class="name">VilayDed</div>
            </div>
          </div>
-         <a id="log_out" href="/login" ><i class='bx bx-log-out'></i></a>
+         <a id="log_out" href="<%=request.getContextPath()%>/logout" ><i class='bx bx-log-out'></i></a>
      </li>
     </ul>
   </div>
